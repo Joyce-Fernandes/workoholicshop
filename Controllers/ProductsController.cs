@@ -41,18 +41,18 @@ namespace workoholicshop.Controllers
 
             return product;
         }
-        // GET: api/Products/ultimopar
-        [HttpGet]
-        public async Task<List<Product>> GetLastProductsAsync()
-        {
-            List<Product> product = await _context.Product.ToListAsync();
-            var p1 = product.Skip(Math.Max(0, product.Count() - 2));
-            var p2 = product.Skip(Math.Max(0, product.Count() - 1));
-            List<Product> indexProduct = new List<Product>();
-            indexProduct.Add((Product)p1);
-            indexProduct.Add((Product)p2);
-            return indexProduct;
-        }
+        //// GET: api/Products/ultimopar
+        //[HttpGet]
+        //public async Task<List<Product>> GetLastProductsAsync()
+        //{
+        //    List<Product> product = await _context.Product.ToListAsync();
+        //    var p1 = product.Skip(Math.Max(0, product.Count() - 2));
+        //    var p2 = product.Skip(Math.Max(0, product.Count() - 1));
+        //    List<Product> indexProduct = new List<Product>();
+        //    indexProduct.Add((Product)p1);
+        //    indexProduct.Add((Product)p2);
+        //    return indexProduct;
+        //}
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
