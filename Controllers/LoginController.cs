@@ -45,7 +45,7 @@ namespace workoholicshop.Controllers
         // COMPROBAMOS SI EL USUARIO EXISTE EN LA BASE DE DATOS 
         private async Task<ActionResult<User>> AutenticarUsuarioAsync(string email, string password)
         {
-            var user = await _context.User.Where(u=> u.Email==email && u.Password==password).FirstOrDefaultAsync();
+            var user = await _context.User.Where(u => u.Email == email && u.Password == password).FirstOrDefaultAsync();
 
             if (user == null)
             {
