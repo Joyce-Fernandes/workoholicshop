@@ -19,7 +19,7 @@ namespace workoholicshop.Controllers
         public UsersController(ApplicationDbContext context)
         {
             _context = context;
-        }
+        } //Conexion con la BBDD
 
         // GET: api/Users
         [HttpGet]

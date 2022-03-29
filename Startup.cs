@@ -1,17 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+using System.Text;
 using workoholicshop.Data;
 
 namespace workoholicshop
@@ -47,6 +44,29 @@ namespace workoholicshop
                     }
                 );
             });
+<<<<<<< HEAD
+=======
+
+            // CONFIGURACIÓN DEL SERVICIO DE AUTENTICACIÓN JWT
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["JWT:Issuer"],
+                        ValidAudience = Configuration["JWT:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["JWT:ClaveSecreta"])
+                        )
+                    };
+                });
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+>>>>>>> dev
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,10 +79,20 @@ namespace workoholicshop
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "workoholicshop v1"));
             }
 
+            // AÑADIMOS EL MIDDLEWARE DE AUTENTICACIÓN
+            // DE USUARIOS AL PIPELINE DE ASP.NET CORE
+            app.UseAuthentication();
+
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+<<<<<<< HEAD
             app.UseAuthorization();
 
             app.UseCors(builder =>
@@ -70,6 +100,8 @@ namespace workoholicshop
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             });
 
+=======
+>>>>>>> dev
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
