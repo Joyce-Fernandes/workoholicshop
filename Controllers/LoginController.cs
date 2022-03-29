@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -39,10 +37,10 @@ namespace workoholicshop.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(User user)
         {
-            var _userInfo = await AutenticarUsuarioAsync(user.Name, user.Password);
+            var _userInfo = await AutenticarUsuarioAsync(user.Email, user.Password);
             if (_userInfo != null)
             {
-                return Ok(new { token = GenerarTokenJWT(_userInfo) });
+                return Ok(new { token = GenerarTokenJWT(user) });
             }
             else
             {
@@ -53,8 +51,6 @@ namespace workoholicshop.Controllers
         // COMPROBAMOS SI EL USUARIO EXISTE EN LA BASE DE DATOS 
         private async Task<ActionResult<User>> AutenticarUsuarioAsync(string email, string password)
         {
-            
-
             var user = await _context.User.Where(u=> u.Email==email && u.Password==password).FirstOrDefaultAsync();
 
             if (user == null)
@@ -63,10 +59,6 @@ namespace workoholicshop.Controllers
             }
 
             return user;
-
-            // Supondremos que el Usuario NO existe en la Base de Datos.
-            // Retornamos NULL.
-            //return null;
         }
 
         // GENERAMOS EL TOKEN CON LA INFORMACIÓN DEL USUARIO
