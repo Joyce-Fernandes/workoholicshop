@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace workoholicshop.Models
 {
@@ -16,6 +19,11 @@ namespace workoholicshop.Models
 
 
         public List <Photo> Photos { get; set; }
+
+        public static implicit operator Product(Task<ActionResult<IEnumerable<Product>>> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
