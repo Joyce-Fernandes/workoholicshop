@@ -12,9 +12,8 @@ namespace workoholicshop.Models
         public string Color { get; set; }
         public string Size { get; set; }
         public int CategoryId { get; set; }
+        public string FeaturedPhoto { get; set; }
         public Category Category { get; set; }
-
-
         public List <Photo> Photos { get; set; }
     }
 

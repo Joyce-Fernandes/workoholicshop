@@ -34,6 +34,15 @@ namespace workoholicshop
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "workoholicshop", Version = "v1" });
             });
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    }
+                );
+            });
 
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
@@ -54,6 +63,10 @@ namespace workoholicshop
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            });
 
             app.UseEndpoints(endpoints =>
             {
