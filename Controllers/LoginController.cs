@@ -18,14 +18,8 @@ namespace workoholicshop.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-
         private readonly IConfiguration configuration;
         private readonly ApplicationDbContext _context;
-
-       
-
-        // TRAEMOS EL OBJETO DE CONFIGURACIÓN (appsettings.json)
-        // MEDIANTE INYECCIÓN DE DEPENDENCIAS.
         public LoginController(IConfiguration configuration, ApplicationDbContext context)
         {
             this.configuration = configuration;

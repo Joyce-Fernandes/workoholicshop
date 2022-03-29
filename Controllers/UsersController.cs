@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,7 @@ namespace workoholicshop.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
+        //[Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<User>> GetUser(int id)
         {
             var user = await _context.User.FindAsync(id);
@@ -45,6 +47,7 @@ namespace workoholicshop.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        //[Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<IActionResult> PutUser(int id, User user)
         {
             if (id != user.Id)
@@ -76,6 +79,7 @@ namespace workoholicshop.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        //[Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<User>> PostUser(User user)
         {
             _context.User.Add(user);
@@ -86,6 +90,7 @@ namespace workoholicshop.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
+        //[Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.User.FindAsync(id);
