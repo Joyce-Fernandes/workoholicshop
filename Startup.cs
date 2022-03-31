@@ -76,9 +76,7 @@ namespace workoholicshop
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "workoholicshop v1"));
             }
 
-            // AÑADIMOS EL MIDDLEWARE DE AUTENTICACIÓN
-            // DE USUARIOS AL PIPELINE DE ASP.NET CORE
-            app.UseAuthentication();
+            
 
             app.UseCors(builder =>
             {
@@ -88,6 +86,12 @@ namespace workoholicshop
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+            // AÑADIMOS EL MIDDLEWARE DE AUTENTICACIÓN
+            // DE USUARIOS AL PIPELINE DE ASP.NET CORE
 
             app.UseEndpoints(endpoints =>
             {

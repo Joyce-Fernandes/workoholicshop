@@ -25,7 +25,7 @@ namespace workoholicshop.Controllers
 
         // GET: api/Products
         [HttpGet]
-        //[Authorize] // SOLO USUARIOS AUTENTICADOS
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
             return await _context.Product.ToListAsync();

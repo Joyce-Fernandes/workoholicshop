@@ -31,7 +31,7 @@ namespace workoholicshop.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(User user)
         {
-            var _userInfo = await AutenticarUsuarioAsync(user.Email, user.Password);
+            var _userInfo = await AutenticarUsuarioAsync(user.Email , user.Password);
             if (_userInfo != null)
             {
                 return Ok(new { token = GenerarTokenJWT(user) });
@@ -49,10 +49,12 @@ namespace workoholicshop.Controllers
 
             if (user == null)
             {
-                return NotFound();
+                return null;
             }
-
-            return user;
+            else
+            {
+                return user;
+            }
         }
 
         // GENERAMOS EL TOKEN CON LA INFORMACIÓN DEL USUARIO
