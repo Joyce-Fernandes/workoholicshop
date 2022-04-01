@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using workoholicshop.Data;
@@ -25,7 +23,7 @@ namespace workoholicshop.Controllers
 
         // GET: api/Products
         [HttpGet]
-        [Authorize] // SOLO USUARIOS AUTENTICADOS
+        [Authorize(Roles = "Admin")] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
             return await _context.Product.ToListAsync();
