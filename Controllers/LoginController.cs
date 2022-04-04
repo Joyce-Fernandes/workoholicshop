@@ -18,14 +18,8 @@ namespace workoholicshop.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-
         private readonly IConfiguration configuration;
         private readonly ApplicationDbContext _context;
-
-       
-
-        // TRAEMOS EL OBJETO DE CONFIGURACIÓN (appsettings.json)
-        // MEDIANTE INYECCIÓN DE DEPENDENCIAS.
         public LoginController(IConfiguration configuration, ApplicationDbContext context)
         {
             this.configuration = configuration;
@@ -37,7 +31,7 @@ namespace workoholicshop.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(User user)
         {
-            var _userInfo = await AutenticarUsuarioAsync(user.Email, user.Password);
+            var _userInfo = await AutenticarUsuarioAsync(user.Email , user.Password);
             if (_userInfo != null)
             {
                 return Ok(new { token = GenerarTokenJWT(user) });
@@ -51,14 +45,16 @@ namespace workoholicshop.Controllers
         // COMPROBAMOS SI EL USUARIO EXISTE EN LA BASE DE DATOS 
         private async Task<ActionResult<User>> AutenticarUsuarioAsync(string email, string password)
         {
-            var user = await _context.User.Where(u=> u.Email==email && u.Password==password).FirstOrDefaultAsync();
+            var user = await _context.User.Where(u => u.Email == email && u.Password == password).FirstOrDefaultAsync();
 
             if (user == null)
             {
-                return NotFound();
+                return null;
             }
-
-            return user;
+            else
+            {
+                return user;
+            }
         }
 
         // GENERAMOS EL TOKEN CON LA INFORMACIÓN DEL USUARIO
