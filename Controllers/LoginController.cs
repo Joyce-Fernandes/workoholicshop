@@ -34,7 +34,7 @@ namespace workoholicshop.Controllers
             var _userInfo = await AutenticarUsuarioAsync(user.Email , user.Password);
             if (_userInfo != null)
             {
-                return Ok(new { token = GenerarTokenJWT(user) });
+                return Ok(new { token = GenerarTokenJWT(user)});
             }
             else
             {

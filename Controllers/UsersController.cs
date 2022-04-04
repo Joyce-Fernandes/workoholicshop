@@ -25,7 +25,7 @@ namespace workoholicshop.Controllers
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
-        {
+        {   
             return await _context.User.ToListAsync();
         }
 
@@ -41,6 +41,18 @@ namespace workoholicshop.Controllers
                 return NotFound();
             }
 
+            return user;
+        }
+        // GET: api/Users/5
+        [HttpGet("mail/{email}")]
+        //[Authorize] // SOLO USUARIOS AUTENTICADOS
+        public async Task<ActionResult<User>> GetUserMail(string email)
+        {
+            var user = await _context.User.Where(u => u.Email == email).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return NotFound();
+            }
             return user;
         }
 
