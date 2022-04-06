@@ -34,7 +34,15 @@ namespace workoholicshop.Controllers
         //[Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.User.Where(u => u.Id == id).FirstOrDefaultAsync();
+            List<Order> orders = await _context.Order.Where(o => o.UserId == id).ToListAsync();
+
+            foreach (Order o in orders)
+            {
+                o.User = null;
+            }
+
+            user.Orders = orders;
 
             if (user == null)
             {
