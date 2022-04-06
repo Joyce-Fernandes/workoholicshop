@@ -44,8 +44,8 @@ namespace workoholicshop
                     }
                 );
             });
-<<<<<<< HEAD
-=======
+
+
 
             // CONFIGURACIÓN DEL SERVICIO DE AUTENTICACIÓN JWT
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -66,7 +66,7 @@ namespace workoholicshop
                 });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
->>>>>>> dev
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,7 +92,7 @@ namespace workoholicshop
 
             app.UseRouting();
 
-<<<<<<< HEAD
+
             app.UseAuthorization();
 
             app.UseCors(builder =>
@@ -100,8 +100,6 @@ namespace workoholicshop
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             });
 
-=======
->>>>>>> dev
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -18,7 +18,7 @@ namespace workoholicshop.Models
         public string FeaturedPhoto { get; set; }
         public Category Category { get; set; }
 
-        public List <Photo> Photos { get; set; }
+        //public List<Photo> Photos { get; set; }
 
         //public static implicit operator Product(Task<ActionResult<IEnumerable<Product>>> v)
         //{
