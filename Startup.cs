@@ -45,8 +45,6 @@ namespace workoholicshop
                 );
             });
 
-
-
             // CONFIGURACIÓN DEL SERVICIO DE AUTENTICACIÓN JWT
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -66,7 +64,6 @@ namespace workoholicshop
                 });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,9 +76,7 @@ namespace workoholicshop
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "workoholicshop v1"));
             }
 
-            // AÑADIMOS EL MIDDLEWARE DE AUTENTICACIÓN
-            // DE USUARIOS AL PIPELINE DE ASP.NET CORE
-            app.UseAuthentication();
+            
 
             app.UseCors(builder =>
             {
@@ -92,13 +87,11 @@ namespace workoholicshop
 
             app.UseRouting();
 
+            app.UseAuthentication();
 
             app.UseAuthorization();
-
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-            });
+            // AÑADIMOS EL MIDDLEWARE DE AUTENTICACIÓN
+            // DE USUARIOS AL PIPELINE DE ASP.NET CORE
 
             app.UseEndpoints(endpoints =>
             {

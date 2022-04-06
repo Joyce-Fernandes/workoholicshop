@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using workoholicshop.Data;
@@ -12,6 +12,7 @@ namespace workoholicshop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize] // SOLO USUARIOS AUTENTICADOS
     public class ProductsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -23,6 +24,7 @@ namespace workoholicshop.Controllers
 
         // GET: api/Products
         [HttpGet]
+        //[Authorize(Roles = "Admin")] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
             return await _context.Product.ToListAsync();
@@ -30,6 +32,7 @@ namespace workoholicshop.Controllers
 
         // GET: api/Products/5
         [HttpGet("{id}")]
+        //[Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = await _context.Product.FindAsync(id);
@@ -41,22 +44,12 @@ namespace workoholicshop.Controllers
 
             return product;
         }
-        //// GET: api/Products/ultimopar
-        //[HttpGet]
-        //public async Task<List<Product>> GetLastProductsAsync()
-        //{
-        //    List<Product> product = await _context.Product.ToListAsync();
-        //    var p1 = product.Skip(Math.Max(0, product.Count() - 2));
-        //    var p2 = product.Skip(Math.Max(0, product.Count() - 1));
-        //    List<Product> indexProduct = new List<Product>();
-        //    indexProduct.Add((Product)p1);
-        //    indexProduct.Add((Product)p2);
-        //    return indexProduct;
-        //}
+        
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        //[Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
             if (id != product.Id)
@@ -88,6 +81,7 @@ namespace workoholicshop.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        //[Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
             _context.Product.Add(product);
@@ -98,6 +92,7 @@ namespace workoholicshop.Controllers
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
+        //[Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _context.Product.FindAsync(id);

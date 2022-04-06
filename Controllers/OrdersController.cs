@@ -29,6 +29,17 @@ namespace workoholicshop.Controllers
         }
 
         // GET: api/Orders/5
+        [HttpGet("date/{UserId}")]
+        public async Task<ActionResult<Order>> GetOrder(int UserId, DateTime Date)
+        {
+            var user = await _context.Order.Where(o => o.UserId == UserId && o.Date==Date).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return user;
+        }
+        // GET: api/Orders/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
