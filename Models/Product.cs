@@ -19,10 +19,10 @@ namespace workoholicshop.Models
         public Category Category { get; set; }
         public List <Photo> Photos { get; set; }
 
-        public static implicit operator Product(Task<ActionResult<IEnumerable<Product>>> v)
-        {
-            throw new NotImplementedException();
-        }
+        //public static implicit operator Product(Task<ActionResult<IEnumerable<Product>>> v)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 
 }
