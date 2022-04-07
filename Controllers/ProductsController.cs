@@ -32,7 +32,7 @@ namespace workoholicshop.Controllers
 
         // GET: api/Products/5
         [HttpGet("{id}")]
-        //[Authorize] // SOLO USUARIOS AUTENTICADOS
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product = await _context.Product.FindAsync(id);

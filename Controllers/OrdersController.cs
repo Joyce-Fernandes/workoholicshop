@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using workoholicshop.Data;
@@ -23,6 +23,7 @@ namespace workoholicshop.Controllers
 
         // GET: api/Orders
         [HttpGet]
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
         {
             return await _context.Order.ToListAsync();
@@ -30,6 +31,7 @@ namespace workoholicshop.Controllers
 
         // GET: api/Orders/5
         [HttpGet("date/{UserId}")]
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<Order>> GetOrder(int UserId, DateTime Date)
         {
             var user = await _context.Order.Where(o => o.UserId == UserId && o.Date==Date).FirstOrDefaultAsync();
@@ -41,6 +43,7 @@ namespace workoholicshop.Controllers
         }
         // GET: api/Orders/5
         [HttpGet("{id}")]
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
             var order = await _context.Order.FindAsync(id);
@@ -56,6 +59,7 @@ namespace workoholicshop.Controllers
         // PUT: api/Orders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<IActionResult> PutOrder(int id, Order order)
         {
             if (id != order.Id)
@@ -87,6 +91,7 @@ namespace workoholicshop.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
             _context.Order.Add(order);
@@ -97,6 +102,7 @@ namespace workoholicshop.Controllers
 
         // DELETE: api/Orders/5
         [HttpDelete("{id}")]
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
         public async Task<IActionResult> DeleteOrder(int id)
         {
             var order = await _context.Order.FindAsync(id);
