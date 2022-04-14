@@ -1,0 +1,125 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using workoholicshop.Data;
+using workoholicshop.Models;
+
+namespace workoholicshop.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class OrdersController : ControllerBase
+    {
+        private readonly ApplicationDbContext _context;
+
+        public OrdersController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        // GET: api/Orders
+        [HttpGet]
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
+        {
+            return await _context.Order.ToListAsync();
+        }
+
+        // GET: api/Orders/5
+        [HttpGet("date/{UserId}")]
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
+        public async Task<ActionResult<Order>> GetOrder(int UserId, DateTime Date)
+        {
+            var user = await _context.Order.Where(o => o.UserId == UserId && o.Date==Date).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return user;
+        }
+        // GET: api/Orders/5
+        [HttpGet("{id}")]
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
+        public async Task<ActionResult<Order>> GetOrder(int id)
+        {
+            var order = await _context.Order.FindAsync(id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return order;
+        }
+
+        // PUT: api/Orders/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
+        public async Task<IActionResult> PutOrder(int id, Order order)
+        {
+            if (id != order.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(order).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/Orders
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
+        public async Task<ActionResult<Order>> PostOrder(Order order)
+        {
+            _context.Order.Add(order);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+        }
+
+        // DELETE: api/Orders/5
+        [HttpDelete("{id}")]
+        [Authorize] // SOLO USUARIOS AUTENTICADOS
+        public async Task<IActionResult> DeleteOrder(int id)
+        {
+            var order = await _context.Order.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            _context.Order.Remove(order);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool OrderExists(int id)
+        {
+            return _context.Order.Any(e => e.Id == id);
+        }
+    }
+}
